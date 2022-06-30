@@ -10,10 +10,16 @@ interface IHome {
   currentVoices: VoicesData;
   dateBuilt: string;
   lastVoices: VoicesData;
-  nextFullString: string;
+  nextStart: string;
+  nextEnd: string;
 }
 
-export default function Home({ currentVoices, dateBuilt, lastVoices, nextFullString }: IHome) {
+export default function Home({ currentVoices, dateBuilt, lastVoices, nextStart, nextEnd }: IHome) {
+  const dateBuiltString = formatShortDateTimeString(new Date(dateBuilt));
+  const nextStartString = formatTimeString(new Date(nextStart));
+  const nextEndString = formatTimeString(new Date(nextEnd));
+  const nextFullString = `${nextStartString} to ${nextEndString}`;
+
   return (
     <>
       <Head>
@@ -69,7 +75,7 @@ export default function Home({ currentVoices, dateBuilt, lastVoices, nextFullStr
               </a>
               .
             </p>
-            <p>Last updated: {dateBuilt}</p>
+            <p>Last updated: {dateBuiltString}</p>
           </section>
         </section>
 
@@ -88,7 +94,7 @@ export const getStaticProps: GetStaticProps<IHome> = async () => {
   const currentVoices = voicesData[0];
   const lastVoices = voicesData[1];
 
-  const dateBuilt = formatShortDateTimeString(new Date());
+  const dateBuilt = new Date().toJSON();
 
   const nextChangeStart = new Date();
   const nextChangeEnd = new Date();
@@ -96,11 +102,10 @@ export const getStaticProps: GetStaticProps<IHome> = async () => {
   nextChangeStart.setHours(nextChangeStart.getHours() + 1); // Next change starts at the top of the next hour
   nextChangeEnd.setHours(nextChangeStart.getHours() + 1); // Next change ends an hour after it starts
 
-  const nextStartString = formatTimeString(nextChangeStart);
-  const nextEndString = formatTimeString(nextChangeEnd);
-  const nextFullString = `${nextStartString} to ${nextEndString}`;
+  const nextStart = nextChangeStart.toJSON();
+  const nextEnd = nextChangeEnd.toJSON();
 
   return {
-    props: { currentVoices, lastVoices, dateBuilt, nextFullString },
+    props: { currentVoices, lastVoices, dateBuilt, nextStart, nextEnd },
   };
 };
