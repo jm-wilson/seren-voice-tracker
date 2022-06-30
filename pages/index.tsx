@@ -3,15 +3,17 @@ import Head from 'next/head';
 
 import VoiceTracker from '@/containers/VoiceTracker/VoiceTracker';
 import styles from '@/styles/Home.module.css';
+import { formatShortDateTimeString, formatTimeString } from '@/utils/formatters';
 import { VoicesData } from '@/utils/globalInterfaces';
 
 interface IHome {
   currentVoices: VoicesData;
-  lastVoices: VoicesData;
   dateBuilt: string;
+  lastVoices: VoicesData;
+  nextFullString: string;
 }
 
-export default function Home({ currentVoices, dateBuilt, lastVoices }: IHome) {
+export default function Home({ currentVoices, dateBuilt, lastVoices, nextFullString }: IHome) {
   return (
     <>
       <Head>
@@ -67,10 +69,11 @@ export default function Home({ currentVoices, dateBuilt, lastVoices }: IHome) {
               </a>
               .
             </p>
+            <p>Last updated: {dateBuilt}</p>
           </section>
         </section>
 
-        <VoiceTracker currentVoices={currentVoices} lastVoices={lastVoices} />
+        <VoiceTracker currentVoices={currentVoices} lastVoices={lastVoices} nextFullString={nextFullString} />
       </main>
     </>
   );
@@ -85,9 +88,19 @@ export const getStaticProps: GetStaticProps<IHome> = async () => {
   const currentVoices = voicesData[0];
   const lastVoices = voicesData[1];
 
-  const dateBuilt = new Date().toString();
+  const dateBuilt = formatShortDateTimeString(new Date());
+
+  const nextChangeStart = new Date();
+  const nextChangeEnd = new Date();
+
+  nextChangeStart.setHours(nextChangeStart.getHours() + 1); // Next change starts at the top of the next hour
+  nextChangeEnd.setHours(nextChangeStart.getHours() + 1); // Next change ends an hour after it starts
+
+  const nextStartString = formatTimeString(nextChangeStart);
+  const nextEndString = formatTimeString(nextChangeEnd);
+  const nextFullString = `${nextStartString} to ${nextEndString}`;
 
   return {
-    props: { currentVoices, lastVoices, dateBuilt },
+    props: { currentVoices, lastVoices, dateBuilt, nextFullString },
   };
 };
