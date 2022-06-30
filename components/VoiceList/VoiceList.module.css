@@ -1,0 +1,47 @@
+.figure {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.figure figcaption {
+  font-weight: 700;
+  margin-block-start: 0.5rem;
+}
+
+.list {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-evenly;
+  list-style: none;
+  padding: 0.5rem 2rem;
+}
+
+.title {
+  backdrop-filter: brightness(0.5);
+  margin: 0;
+  padding: 0.5rem 2rem;
+  text-align: center;
+}
+
+.wrapper {
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  box-shadow: 2px 0px 5px 2px #1111;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 821px) and (max-width: 930px) {
+  .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
