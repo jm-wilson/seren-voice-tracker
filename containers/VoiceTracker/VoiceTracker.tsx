@@ -1,24 +1,14 @@
 import VoiceList from '@/components/VoiceList/VoiceList';
 
-import { formatTimeString } from '@/utils/formatters';
 import { VoicesData } from '@/utils/globalInterfaces';
 
 interface IVoiceTracker {
   currentVoices: VoicesData;
   lastVoices: VoicesData;
+  nextFullString: string;
 }
 
-const VoiceTracker = ({ currentVoices, lastVoices }: IVoiceTracker) => {
-  const nextChangeStart = new Date();
-  const nextChangeEnd = new Date();
-
-  nextChangeStart.setHours(nextChangeStart.getHours() + 1); // Next change starts at the top of the next hour
-  nextChangeEnd.setHours(nextChangeStart.getHours() + 1); // Next change ends an hour after it starts
-
-  const nextStartString = formatTimeString(nextChangeStart);
-  const nextEndString = formatTimeString(nextChangeEnd);
-  const nextFullString = `${nextStartString} to ${nextEndString}`;
-
+const VoiceTracker = ({ currentVoices, lastVoices, nextFullString }: IVoiceTracker) => {
   const currentlyActiveArray = [currentVoices.district1, currentVoices.district2];
   const nextCooldownArray = [
     currentVoices.district1,
