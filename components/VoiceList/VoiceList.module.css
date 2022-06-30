@@ -18,6 +18,10 @@
   padding: 0.5rem 2rem;
 }
 
+.listItem {
+  width: 25%;
+}
+
 .title {
   backdrop-filter: brightness(0.5);
   margin: 0;
@@ -36,6 +40,10 @@
   .list {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
+  .listItem {
+    width: 50%;
   }
 }
 
@@ -43,5 +51,9 @@
   .list {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
+  .listItem {
+    width: 50%;
   }
 }
