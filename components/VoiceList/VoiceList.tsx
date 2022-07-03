@@ -39,7 +39,7 @@ const VoiceList = ({ title, voices, bgColor }: IVoiceList) => {
         {voices.map((voice) => (
           <li className={styles.listItem} key={voice}>
             <figure className={styles.figure}>
-              <Image alt={voice} src={clanImages[voice]} height={75} />
+              <Image alt={voice} src={clanImages[voice]} layout='fixed' />
               <figcaption>{voice}</figcaption>
             </figure>
           </li>
