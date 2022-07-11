@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
 import VoiceTracker from '@/containers/VoiceTracker/VoiceTracker';
 import styles from '@/styles/Home.module.css';
@@ -15,10 +16,17 @@ interface IHome {
 }
 
 export default function Home({ currentVoices, dateBuilt, lastVoices, nextStart, nextEnd }: IHome) {
-  const dateBuiltString = formatShortDateTimeString(new Date(dateBuilt));
-  const nextStartString = formatTimeString(new Date(nextStart));
-  const nextEndString = formatTimeString(new Date(nextEnd));
+  const [dateBuiltString, setDateBuiltString] = useState('');
+  const [nextStartString, setNextStartString] = useState('');
+  const [nextEndString, setNextEndString] = useState('');
+
   const nextFullString = `${nextStartString} to ${nextEndString}`;
+
+  useEffect(() => {
+    setDateBuiltString(formatShortDateTimeString(new Date(dateBuilt)));
+    setNextStartString(formatTimeString(new Date(nextStart)));
+    setNextEndString(formatTimeString(new Date(nextEnd)));
+  }, [dateBuilt, nextStart, nextEnd]);
 
   return (
     <>
