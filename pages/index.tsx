@@ -6,6 +6,7 @@ import VoiceTracker from '@/containers/VoiceTracker/VoiceTracker';
 import styles from '@/styles/Home.module.css';
 import { formatShortDateTimeString, formatTimeString } from '@/utils/formatters';
 import { VoicesData } from '@/utils/globalInterfaces';
+import ErrorDialog from '@/components/ErrorDialog/ErrorDialog';
 
 interface IHome {
   currentVoices: VoicesData;
@@ -27,6 +28,9 @@ export default function Home({ currentVoices, dateBuilt, lastVoices, nextStart, 
     setNextStartString(formatTimeString(new Date(nextStart)));
     setNextEndString(formatTimeString(new Date(nextEnd)));
   }, [dateBuilt, nextStart, nextEnd]);
+
+  // If current and last voices match, something is wrong with the API
+  const areVoicesValid = currentVoices.district1 !== lastVoices.district1;
 
   return (
     <>
@@ -87,7 +91,24 @@ export default function Home({ currentVoices, dateBuilt, lastVoices, nextStart, 
           </section>
         </section>
 
-        <VoiceTracker currentVoices={currentVoices} lastVoices={lastVoices} nextFullString={nextFullString} />
+        {areVoicesValid ? (
+          <VoiceTracker currentVoices={currentVoices} lastVoices={lastVoices} nextFullString={nextFullString} />
+        ) : (
+          <ErrorDialog>
+            <p>The voices aren't coming through as clearly as usual... </p>
+            <p>
+              Maybe it's time to buy an&nbsp;
+              <a 
+                href='https://runescape.wiki/w/Elven_clan_cape' 
+                target='_blank'
+                rel='noreferrer'
+              >
+                Elven clan cape
+                </a>
+              .
+            </p>
+          </ErrorDialog>
+        )}
       </main>
     </>
   );
