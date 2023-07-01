@@ -95,9 +95,9 @@ export default function Home({ currentVoices, dateBuilt, lastVoices, nextStart, 
           <VoiceTracker currentVoices={currentVoices} lastVoices={lastVoices} nextFullString={nextFullString} />
         ) : (
           <ErrorDialog>
-            <p>The voices aren't coming through as clearly as usual... </p>
+            <p>The voices aren&apos;t coming through as clearly as usual... </p>
             <p>
-              Maybe it's time to buy an&nbsp;
+              Maybe it&apos;s time to buy an&nbsp;
               <a 
                 href='https://runescape.wiki/w/Elven_clan_cape' 
                 target='_blank'
